@@ -32,7 +32,7 @@ class Roulette extends React.Component {
     options:  ['item1', 'item2', 'item3', 'item4', 'item5'],
     baseSize: 275,
     spinAngleStart: Math.random() * 10 + 10,
-    spinTimeTotal: Math.random() * 3 + 4 * 1000,
+    spinTimeTotal: Math.random() * 3 + 4 * 3000,
   };
 
   componentDidMount() {
