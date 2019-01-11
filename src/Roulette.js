@@ -12,6 +12,7 @@ class Roulette extends React.Component {
       startAngle: 0,
       spinTime: 0,
       arc: Math.PI / (props.options.length / 2),
+      text:''
     }
     this.spinTimer = null;
     this.handleOnClick = this.handleOnClick.bind(this);
@@ -151,12 +152,15 @@ class Roulette extends React.Component {
     const arcd = arc * 180 / Math.PI;
     const index = Math.floor((360 - degrees % 360) / arcd);
     ctx.save();
-    ctx.font = 'bold 20px Helvetica, Arial';
+    
     const text = options[index]
-    ctx.fillText(text, baseSize - ctx.measureText(text).width / 2, baseSize / 3);
+    //console.log(this.props.onComplete, text)
+    this.props.onComplete(text)
     ctx.restore();
-    this.props.onComplete(text);
+    this.setState({text})
+    
   }
+
 
   easeOut(t, b, c, d) {
     const ts = (t/=d)*t;

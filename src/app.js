@@ -1,37 +1,53 @@
-import React from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Roulette from './Roulette';
 import registerServiceWorker from './registerServiceWorker';
-
-
-
-const handleOnComplete = (value) => {
-  console.log(value);
-};
-
-
-
-
-
-class App extends React.Component {
+class App extends Component {
 
     state = {
-        first : '',
-        second: '',
-        third: '',
-        fourth: '',
-        fifth: '',
+        todo : '',
         options: [],
-        showWheel: false
+        showWheel: false,
+        winnerTodo: '',
     }
-
+    // handleOnComplete = (text) =>{
+       
+    //     setTimeout(() => {
+    //        this.reset(); 
+    //     }, 5500);
+    //     return (
+    //         <p>{text}</p>
+    //     )
+    // }
     showWheel = () =>{
         if(this.state.showWheel && (this.state.options.length > 1) ){
-            console.log(this.state.options.length)
             return (
-                <Roulette options={this.state.options} baseSize={250} onComplete={handleOnComplete}/>
+            <Roulette onComplete={this.onComplete} options={this.state.options} baseSize={250} />
             )
         } 
+    }
+    onComplete  = (text) => {
+   
+        this.setState({
+            winnerTodo : text,
+        
+        })
+       
+    }
+    rollWheel = () => {
+        if(this.state.options.length > 1){
+            this.setState({
+                showWheel: true
+            })
+        }
+    }
+    reset = () => {
+        this.setState({
+            todo : '',
+            options : [],
+            showWheel: false,
+            winnerTodo: ''
+        })
     }
 
     handleChange = (e) => {
@@ -42,67 +58,57 @@ class App extends React.Component {
         )
     }
 
-    handleSumbit = (e) =>{
+    handleSubmit = (e) => {
         e.preventDefault();
-        let arr = [ this.state.first, this.state.second, this.state.third, this.state.fourth, this.state.fifth ];
-
-        for(let i = 0; i < arr.length; i++){
-            if(!arr[i]) arr.splice(i,1);
-        }
-
+        let todo = this.state.todo;
         this.setState({
-          options : arr ,
-          first : '',
-          second: '',
-          third: '',
-          fourth: '',
-          fifth: '',
-          showWheel: !this.state.showWheel
-        }, () => {
-            console.log(this.state)
+            todo : '',
+            options : [...this.state.options, todo],
+        }, () =>{
+            console.log(this.state);
         })
     }
-
+    showTodo = () =>{
+        let arr = this.state.options;
+        let listItems  = arr.map((el,index) =>{
+            return (
+             <ul>
+                 <li key = {index}>{el}</li>
+             </ul>
+            )
+        });
+        if(arr.length) {
+            return (
+             <div>
+                 <h3>Todos</h3>
+                 {listItems}
+             </div>
+            )
+        }
+    }
     render(){
         console.log(this.state)
         return(
             <div>
-                
                 {this.showWheel()}
-                <form>
-                    <h3>Up to 5 chores</h3>
-
-                    <label>First</label>
-                    <input name = "first" onChange = {(e) => this.handleChange(e)} type ="text" required />
-
-                    <label>Second</label>
-                    <input name = "second" onChange = {(e) => this.handleChange(e)} type ="text" required />
-
-                    <label>Third</label>
-                    <input name = "third" onChange = {(e) => this.handleChange(e)} type ="text" required />
-
-                    <label>Fourth</label>
-                    <input name = "fourth" onChange = {(e) => this.handleChange(e)} type ="text" required />
-
-                    <label>Fifth</label>
-                    <input name = "fifth" onChange = {(e) => this.handleChange(e)} type ="text" required />
-                    <input type = "submit" onClick = {(e) => this.handleSumbit(e)} />
-                </form>
-            </div>
-
-        )
+                <div>
+                    <form onSubmit = {this.handleSubmit}>
+                       <label>Add thing to do</label>
+                       <input name='todo' value={this.state.todo} onChange = {e=> this.handleChange(e)} required />
+                       <input type="submit" />
+                    </form>
+                    <button onClick ={this.rollWheel}>Start</button>
+                    <div>
+                        {this.showTodo()}
+                    </div>
+                </div>   
+               <p>{this.state.winnerTodo}</p>
+            </div>        
+                )
     }
-
 }
 
-
 export default App;
-
-
-
-
-
-
 
 
 
