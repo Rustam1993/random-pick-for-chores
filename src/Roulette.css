@@ -1,7 +1,6 @@
 .roulette {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+display: block;
+float: right;
 }
 
 .roulette-container {

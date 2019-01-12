@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
 import Roulette from './Roulette';
-import registerServiceWorker from './registerServiceWorker';
+import {FormGroup,Button,ControlLabel,FormControl} from 'react-bootstrap';
+
 class App extends Component {
 
     state = {
@@ -10,15 +10,9 @@ class App extends Component {
         showWheel: false,
         winnerTodo: '',
     }
-    // handleOnComplete = (text) =>{
-       
-    //     setTimeout(() => {
-    //        this.reset(); 
-    //     }, 5500);
-    //     return (
-    //         <p>{text}</p>
-    //     )
-    // }
+    componentWillMount(){
+        this.reset()
+    }
     showWheel = () =>{
         if(this.state.showWheel && (this.state.options.length > 1) ){
             return (
@@ -60,6 +54,7 @@ class App extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
+        if(this.state.todo){
         let todo = this.state.todo;
         this.setState({
             todo : '',
@@ -67,6 +62,7 @@ class App extends Component {
         }, () =>{
             console.log(this.state);
         })
+     }  
     }
     showTodo = () =>{
         let arr = this.state.options;
@@ -86,23 +82,32 @@ class App extends Component {
             )
         }
     }
+
+
     render(){
         console.log(this.state)
         return(
             <div>
                 {this.showWheel()}
                 <div>
-                    <form onSubmit = {this.handleSubmit}>
-                       <label>Add thing to do</label>
-                       <input name='todo' value={this.state.todo} onChange = {e=> this.handleChange(e)} required />
-                       <input type="submit" />
+                    <form className="form-margin" onSubmit = {this.handleSubmit}>
+                        <ControlLabel>Add chore</ControlLabel>
+                        <div>
+                            <FormControl name="todo" onChange = {(e) => this.handleChange(e)} type="text" value={this.state.todo}  bsClass='width50' bsSize='lg'   placeholder="Enter text here" />
+                        </div>
+                        <div>
+                        <Button  bsStyle="info"    onClick ={this.handleSubmit}>Add chore</Button >
+                        <Button  bsStyle="success" onClick ={this.rollWheel}   >Start</Button >
+                        <Button  bsStyle="danger"  onClick ={this.reset}   >Reset</Button >
+                        </div>    
                     </form>
-                    <button onClick ={this.rollWheel}>Start</button>
                     <div>
                         {this.showTodo()}
                     </div>
                 </div>   
-               <p>{this.state.winnerTodo}</p>
+                <div>
+                    <p>{this.state.winnerTodo}</p>
+                </div>     
             </div>        
                 )
     }

@@ -3,3 +3,13 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+.width50{
+  width: 25vw;
+}
+
+.btn{
+  margin: 1vw;
+}
+.form-margin{
+  margin: 1vw;
+} 

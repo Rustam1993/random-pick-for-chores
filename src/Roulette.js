@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
+import {Button} from 'react-bootstrap';
 import './Roulette.css';
 
 
@@ -181,7 +181,8 @@ class Roulette extends React.Component {
           <canvas ref="canvas" width={baseSize * 2} height={baseSize * 2} className="roulette-canvas"></canvas>
         </div>
         <div className="roulette-container">
-          <input type="button" value="spin" onClick={this.handleOnClick} className="button" id="spin" />
+        <Button bsClass="btn" bsStyle="info" onClick = {this.handleOnClick}>Spin</Button>
+          {/* <input type="button" value="spin" onClick={this.handleOnClick} className="button" id="spin" /> */}
         </div>
       </div>
     );
