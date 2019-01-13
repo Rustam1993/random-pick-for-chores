@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import Roulette from './Roulette';
-import {FormGroup,Button,ControlLabel,FormControl} from 'react-bootstrap';
+import {ListGroupItem,ListGroup,FormGroup,Button,ControlLabel,FormControl} from 'react-bootstrap';
 
 class App extends Component {
 
@@ -68,9 +68,9 @@ class App extends Component {
         let arr = this.state.options;
         let listItems  = arr.map((el,index) =>{
             return (
-             <ul>
-                 <li key = {index}>{el}</li>
-             </ul>
+             <ListGroup>
+                 <ListGroupItem bsClass='list-group-item' bsStyle='info' key = {index}>{el}</ListGroupItem>
+             </ListGroup>
             )
         });
         if(arr.length) {

@@ -13,3 +13,7 @@ body {
 .form-margin{
   margin: 1vw;
 } 
+.list-group-item{
+  width: 30%;
+  margin: 1vw;
+}
