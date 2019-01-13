@@ -7,7 +7,8 @@
     "react": "^16.1.1",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.1.1",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "video-react": "^0.13.2"
   },
   "scripts": {
     "start": "react-scripts start",

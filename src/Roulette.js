@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'react-bootstrap';
 import './Roulette.css';
+import { Player } from 'video-react';
+import "node_modules/video-react/dist/video-react.css";
 
 
 class Roulette extends React.Component {
@@ -125,7 +127,7 @@ class Roulette extends React.Component {
 
   rotate(){
     const { spinAngleStart, spinTimeTotal } = this.props;
-    if(this.state.spinTime > 2800) {
+    if(this.state.spinTime > 5000) {
       clearTimeout(this.spinTimer);
       this.stopRotateWheel();
     } else {
@@ -182,7 +184,12 @@ class Roulette extends React.Component {
         </div>
         <div className="roulette-container">
         <Button bsClass="btn" bsStyle="info" onClick = {this.handleOnClick}>Spin</Button>
-          {/* <input type="button" value="spin" onClick={this.handleOnClick} className="button" id="spin" /> */}
+        </div>
+        <div>
+        <Player 
+          playsInline
+          src="https://www.youtube.com/watch?time_continue=7&v=IcZy4Zbedvg"
+        />  
         </div>
       </div>
     );
