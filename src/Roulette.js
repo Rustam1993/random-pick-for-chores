@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {Button} from 'react-bootstrap';
 import './Roulette.css';
-import { Player } from 'video-react';
-import "node_modules/video-react/dist/video-react.css";
+
 
 
 class Roulette extends React.Component {
@@ -135,6 +134,7 @@ class Roulette extends React.Component {
       this.setState({
         startAngle: this.state.startAngle + spinAngle * Math.PI / 180,
         spinTime: this.state.spinTime + 30,
+        
       }, () => {
         this.drawRouletteWheel();
         clearTimeout(this.spinTimer);
@@ -172,6 +172,7 @@ class Roulette extends React.Component {
 
   handleOnClick() {
     this.spin();
+  
   }
 
   render() {
@@ -183,13 +184,9 @@ class Roulette extends React.Component {
           <canvas ref="canvas" width={baseSize * 2} height={baseSize * 2} className="roulette-canvas"></canvas>
         </div>
         <div className="roulette-container">
-        <Button bsClass="btn" bsStyle="info" onClick = {this.handleOnClick}>Spin</Button>
+        <Button bsClass="btn animation" bsStyle="info" onClick = {this.handleOnClick}>CLICK ME</Button>
         </div>
         <div>
-        <Player 
-          playsInline
-          src="https://www.youtube.com/watch?time_continue=7&v=IcZy4Zbedvg"
-        />  
         </div>
       </div>
     );

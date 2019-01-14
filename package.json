@@ -8,6 +8,7 @@
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.1.1",
     "react-scripts": "1.0.17",
+    "react-sound": "^1.2.0",
     "video-react": "^0.13.2"
   },
   "scripts": {

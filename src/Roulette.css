@@ -8,3 +8,15 @@ float: right;
   justify-content: center;
   padding: 5px;
 }
+
+@-webkit-keyframes greenPulse {
+  from { background-color: #ffffff; -webkit-box-shadow: 0 0 9px rgb(255, 255, 255); }
+  50% { background-color: #0059ff; -webkit-box-shadow: 0 0 18px #00638a; }
+  to { background-color: #ffffff; -webkit-box-shadow: 0 0 9px rgb(255, 255, 255); }
+}
+
+.animation{
+  -webkit-animation-name: greenPulse;
+  -webkit-animation-duration: 0.5s;
+  -webkit-animation-iteration-count: infinite;
+}

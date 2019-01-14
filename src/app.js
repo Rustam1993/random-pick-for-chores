@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Roulette from './Roulette';
 import {ListGroupItem,ListGroup,FormGroup,Button,ControlLabel,FormControl} from 'react-bootstrap';
-
+import Sound from 'react-sound';
 class App extends Component {
 
     state = {
@@ -9,6 +9,7 @@ class App extends Component {
         options: [],
         showWheel: false,
         winnerTodo: '',
+        playing : Sound.status.STOPPED
     }
     componentWillMount(){
         this.reset()
@@ -24,14 +25,15 @@ class App extends Component {
    
         this.setState({
             winnerTodo : text,
-        
+            
         })
        
     }
     rollWheel = () => {
         if(this.state.options.length > 1){
             this.setState({
-                showWheel: true
+                showWheel: true,
+                playing : Sound.status.PLAYING
             })
         }
     }
@@ -40,7 +42,8 @@ class App extends Component {
             todo : '',
             options : [],
             showWheel: false,
-            winnerTodo: ''
+            winnerTodo: '',
+            playing : Sound.status.STOPPED
         })
     }
 
@@ -82,7 +85,13 @@ class App extends Component {
             )
         }
     }
-
+    handleSound =() =>{
+        if(this.state.winnerTodo){
+            this.setState({
+                playing : Sound.status.STOPPED
+            })
+        }
+    }
 
     render(){
         console.log(this.state)
@@ -107,7 +116,16 @@ class App extends Component {
                 </div>   
                 <div>
                     <p>{this.state.winnerTodo}</p>
-                </div>     
+                </div>   
+                <Sound
+                 url="/Woody Spin.mp3"
+                 playStatus={this.state.playing}
+                 playFromPosition={300 /* in milliseconds */}
+                 onLoading={this.handleSongLoading}
+                 onPlaying={this.handleSongPlaying}
+                 onFinishedPlaying={this.handleSongFinishedPlaying}
+                 onStop = {this.handleSound}
+                />  
             </div>        
                 )
     }
