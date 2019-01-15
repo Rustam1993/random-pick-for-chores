@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Roulette from './Roulette';
 import {ListGroupItem,ListGroup,FormGroup,Button,ControlLabel,FormControl} from 'react-bootstrap';
 import Sound from 'react-sound';
+import Popup from 'reactjs-popup'
 class App extends Component {
 
     state = {
@@ -9,7 +10,13 @@ class App extends Component {
         options: [],
         showWheel: false,
         winnerTodo: '',
-        playing : Sound.status.STOPPED
+        playing : Sound.status.STOPPED,
+        style : {},
+        popupOpen: false,
+        showChoresForm : false,
+        showNameForm : true,
+        name: '',
+        classForChoreForm : 'form-and-image'
     }
     componentWillMount(){
         this.reset()
@@ -22,18 +29,18 @@ class App extends Component {
         } 
     }
     onComplete  = (text) => {
-   
         this.setState({
             winnerTodo : text,
-            
+            popupOpen : true
         })
-       
     }
     rollWheel = () => {
         if(this.state.options.length > 1){
             this.setState({
                 showWheel: true,
-                playing : Sound.status.PLAYING
+                playing : Sound.status.PLAYING,
+                style : { display: 'none'},
+                classForChoreForm :  "form-and-image1"
             })
         }
     }
@@ -43,7 +50,11 @@ class App extends Component {
             options : [],
             showWheel: false,
             winnerTodo: '',
-            playing : Sound.status.STOPPED
+            playing : Sound.status.STOPPED,
+            popupOpen: false,
+            style : {},
+            classForChoreForm :  "form-and-image"
+
         })
     }
 
@@ -63,7 +74,7 @@ class App extends Component {
             todo : '',
             options : [...this.state.options, todo],
         }, () =>{
-            console.log(this.state);
+            
         })
      }  
     }
@@ -78,7 +89,7 @@ class App extends Component {
         });
         if(arr.length) {
             return (
-             <div>
+             <div className="todos">
                  <h3>Todos</h3>
                  {listItems}
              </div>
@@ -92,42 +103,80 @@ class App extends Component {
             })
         }
     }
-
+    closeModal =() =>{
+        this.setState({
+            popupOpen:false
+        })
+    }
+    showChoresForm = () =>{
+        if(this.state.showChoresForm){
+            return (
+                <div className={this.state.classForChoreForm}>
+                <form className="form-margin" onSubmit = {this.handleSubmit}>
+                    <ControlLabel>Add chores</ControlLabel>
+                    <div>
+                        <FormControl name="todo" onChange = {(e) => this.handleChange(e)} type="text" value={this.state.todo}  bsClass='width50' bsSize='lg'   placeholder="Enter text here" />
+                    </div>
+                    <div>
+                    <Button  bsStyle="info"    onClick ={this.handleSubmit}>Add</Button >
+                    <Button  bsStyle="success" onClick ={this.rollWheel}   >Start</Button >
+                    <Button  bsStyle="danger"  onClick ={this.reset}       >Reset</Button >
+                    </div>    
+                </form>
+                <img style = {this.state.style} src='/90187b36a894dbc0b8386bf0180b7faba2611a3fdae1bef896bc526655ea1577.jpg' alt ='chores99' />
+              </div>
+            )
+        }
+    }
+    showNameForm = () =>{
+        if(this.state.showNameForm){
+        return (
+            <form className='name-form'>
+                <ControlLabel>No time to explain! What's your name?</ControlLabel>
+                <div>
+                    <FormControl name="name" onChange = {(e) => this.handleChange(e)} type="text" value={this.state.name}  bsClass='width50' bsSize='lg'   placeholder="YOUR NAME" />
+                </div>
+                <Button bsClass='btn-name'   onClick ={this.handleNameInpput}>Ok, what's next?</Button >    
+            </form>
+        )
+       }
+    }
+    handleNameInpput = () =>{
+        this.setState({
+            showNameForm : false,
+            showChoresForm : true
+        })
+    }
+    
     render(){
-        console.log(this.state)
+       
         return(
             <div>
-                {this.showWheel()}
-                <div>
-                    <form className="form-margin" onSubmit = {this.handleSubmit}>
-                        <ControlLabel>Add chore</ControlLabel>
-                        <div>
-                            <FormControl name="todo" onChange = {(e) => this.handleChange(e)} type="text" value={this.state.todo}  bsClass='width50' bsSize='lg'   placeholder="Enter text here" />
-                        </div>
-                        <div>
-                        <Button  bsStyle="info"    onClick ={this.handleSubmit}>Add chore</Button >
-                        <Button  bsStyle="success" onClick ={this.rollWheel}   >Start</Button >
-                        <Button  bsStyle="danger"  onClick ={this.reset}   >Reset</Button >
-                        </div>    
-                    </form>
-                    <div>
-                        {this.showTodo()}
-                    </div>
-                </div>   
+            {this.showNameForm()}
+            {this.showChoresForm()} 
+            {this.showWheel()}
+            {this.showTodo()}
+            <Sound
+            url="/Woody Spin.mp3"
+            playStatus={this.state.playing}
+            playFromPosition={300 /* in milliseconds */}
+            onLoading={this.handleSongLoading}
+            onPlaying={this.handleSongPlaying}
+            onFinishedPlaying={this.handleSongFinishedPlaying}
+            onStop = {this.handleSound}
+            />
+            <Popup
+             open={this.state.popupOpen}
+             closeOnDocumentClick
+             onClose={this.closeModal}
+            >
                 <div>
                     <p>{this.state.winnerTodo}</p>
-                </div>   
-                <Sound
-                 url="/Woody Spin.mp3"
-                 playStatus={this.state.playing}
-                 playFromPosition={300 /* in milliseconds */}
-                 onLoading={this.handleSongLoading}
-                 onPlaying={this.handleSongPlaying}
-                 onFinishedPlaying={this.handleSongFinishedPlaying}
-                 onStop = {this.handleSound}
-                />  
-            </div>        
-                )
+                        <Button  bsStyle="danger"  onClick ={this.reset}   >Start over</Button >
+                    </div> 
+            </Popup>  
+        </div>        
+            )
     }
 }
 
