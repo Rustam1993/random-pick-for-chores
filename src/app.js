@@ -31,7 +31,8 @@ class App extends Component {
     onComplete  = (text) => {
         this.setState({
             winnerTodo : text,
-            popupOpen : true
+            popupOpen : true,
+            playing : Sound.status.STOPPED
         })
     }
     rollWheel = () => {
@@ -131,7 +132,7 @@ class App extends Component {
     showNameForm = () =>{
         if(this.state.showNameForm){
         return (
-            <form className='name-form'>
+            <form onSubmit={this.handleNameInpput} className='name-form'>
                 <ControlLabel>No time to explain! What's your name?</ControlLabel>
                 <div>
                     <FormControl name="name" onChange = {(e) => this.handleChange(e)} type="text" value={this.state.name}  bsClass='width50' bsSize='lg'   placeholder="YOUR NAME" />
